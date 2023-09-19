@@ -31,7 +31,22 @@ class _TicTacToePageState extends State<TicTacToePage> {
   Widget build(BuildContext context) {
     List<Widget> buttons = [];
     for (var k = 0; k < 9; k++) {
-      var newButton = Image.asset("assets/images/x.png");
+      var filename = "assets/images/blank.png";
+      if (game.board[k] == TicTacToeMark.x) {
+        filename = "assets/images/x.png";
+      } else if (game.board[k] == TicTacToeMark.o) {
+        filename = "assets/images/o.png";
+      }
+      var newButton = InkWell(
+        onTap: () {
+          print("You press button $k");
+          setState(() {
+            game.pressedSquare(k);
+            print(game);
+          });
+        },
+        child: Image.asset(filename),
+      );
       buttons.add(newButton);
     }
 
@@ -46,10 +61,13 @@ class _TicTacToePageState extends State<TicTacToePage> {
           constraints: const BoxConstraints(maxWidth: 500.0),
           child: Column(
             children: [
-              Text(
-                getStateString(),
-                // style: TextStyle(fontSize: 40.0),
-                style: Theme.of(context).textTheme.displayLarge,
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 30.0),
+                child: Text(
+                  getStateString(),
+                  // style: TextStyle(fontSize: 40.0),
+                  style: Theme.of(context).textTheme.displayLarge,
+                ),
               ),
               Expanded(
                 child: Stack(
