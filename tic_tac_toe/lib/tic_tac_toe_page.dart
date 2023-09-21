@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tic_tac_toe/board_component.dart';
 import 'package:tic_tac_toe/tic_tac_toe_game.dart';
 
 class TicTacToePage extends StatefulWidget {
@@ -29,25 +30,6 @@ class _TicTacToePageState extends State<TicTacToePage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> buttons = [];
-    for (var k = 0; k < 9; k++) {
-      var filename = "assets/images/blank.png";
-      if (game.board[k] == TicTacToeMark.x) {
-        filename = "assets/images/x.png";
-      } else if (game.board[k] == TicTacToeMark.o) {
-        filename = "assets/images/o.png";
-      }
-      var newButton = InkWell(
-        onTap: () {
-          setState(() {
-            game.pressedSquare(k);
-          });
-        },
-        child: Image.asset(filename),
-      );
-      buttons.add(newButton);
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Tic-Tac-Toe"),
@@ -68,19 +50,13 @@ class _TicTacToePageState extends State<TicTacToePage> {
                   style: Theme.of(context).textTheme.displayLarge,
                 ),
               ),
-              Expanded(
-                child: Stack(
-                  children: [
-                    Image.asset("assets/images/board.png"),
-                    GridView.count(
-                      crossAxisCount: 3,
-                      physics: const NeverScrollableScrollPhysics(),
-                      crossAxisSpacing: 30.0,
-                      mainAxisSpacing: 30.0,
-                      children: buttons,
-                    ),
-                  ],
-                ),
+              Board(
+                game: game,
+                pressedSquare: (index) {
+                  setState(() {
+                    game.pressedSquare(index);
+                  });
+                },
               ),
               Container(
                 margin: const EdgeInsets.only(bottom: 30.0),
