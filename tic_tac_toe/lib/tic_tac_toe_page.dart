@@ -39,10 +39,8 @@ class _TicTacToePageState extends State<TicTacToePage> {
       }
       var newButton = InkWell(
         onTap: () {
-          print("You press button $k");
           setState(() {
             game.pressedSquare(k);
-            print(game);
           });
         },
         child: Image.asset(filename),
@@ -60,6 +58,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
           // width: 300.0,
           constraints: const BoxConstraints(maxWidth: 500.0),
           child: Column(
+            //crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 30.0),
@@ -83,6 +82,23 @@ class _TicTacToePageState extends State<TicTacToePage> {
                   ],
                 ),
               ),
+              Container(
+                margin: const EdgeInsets.only(bottom: 30.0),
+                alignment: Alignment.topRight,
+                child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        game = TicTacToeGame();
+                      });
+                    },
+                    child: const Text(
+                      "New Game",
+                      style: TextStyle(
+                        fontSize: 30.0,
+                        color: Color.fromRGBO(128, 0, 0, 1.0),
+                      ),
+                    )),
+              )
             ],
           ),
         ),
